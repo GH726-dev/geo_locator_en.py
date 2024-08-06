@@ -1,5 +1,7 @@
 # geo_locator_en.py
 طريقة تحميل الاداة تم برمجة هاذة الاداة بذكاء الاصطناعي و شكرا 
+
+
 1  pkg update && pkg upgrade
 
 2  pkg install git
