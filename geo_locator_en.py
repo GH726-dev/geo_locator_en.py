@@ -11,9 +11,18 @@ def show_banner():
 
 def get_location(ip=''):
     try:
-        response = requests.get(f"https://ipinfo.io/{ip}/json")
-        data = response.json()
-        return data
+        if not ip:
+            response = requests.get("https://ipinfo.io/json")
+        else:
+            response = requests.get(f"https://ipinfo.io/{ip}/json")
+        
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            print(f"Failed to retrieve data. Status code: {response.status_code}")
+            return None
+            
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -21,6 +30,12 @@ def get_location(ip=''):
 def main():
     show_banner()
     ip = input("Enter IP address (leave empty to use current IP): ").strip()
+    
+    if ip:
+        parts = ip.split('.')
+        if len(parts) != 4 or not all(part.isdigit() and 0 <= int(part) <= 255 for part in parts):
+            print("Invalid IP address format.")
+            return
     
     location_data = get_location(ip)
     if location_data:
