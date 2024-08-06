@@ -12,4 +12,6 @@
 
 5  pkg install python
 
-6  python geo_locator_en.py
+6  pip install requests
+
+7  python geo_locator_en.py
