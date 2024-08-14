@@ -2,11 +2,12 @@ import requests
 
 def show_banner():
     banner = '''
-    ===========================
-    |   Geo Locator Tool      |
-    |     By Python           |
-    ===========================
-    '''
+▇▇▏◥▇◣┊◢▇◤▕▇▇ 
+▇▇▏▃▆▅▎▅▆▃▕▇▇ 
+▇▇▏╱▔▕▎▔▔╲▕▇▇
+▇▇◣◣▃▅▎▅▃◢◢▇▇ 
+▇▇▇◣◥▅▅▅◤◢▇▇▇ 
+▇▇▇▇◣╲▇╱◢▇▇▇▇  
     print(banner)
 
 def get_location(ip=''):
