@@ -1,13 +1,17 @@
 import requests
+import ipaddress
 
 def show_banner():
     banner = '''
-▇▇▏◥▇◣┊◢▇◤▕▇▇ 
-▇▇▏▃▆▅▎▅▆▃▕▇▇ 
-▇▇▏╱▔▕▎▔▔╲▕▇▇
-▇▇◣◣▃▅▎▅▃◢◢▇▇ 
-▇▇▇◣◥▅▅▅◤◢▇▇▇ 
-▇▇▇▇◣╲▇╱◢▇▇▇▇  
+    ===========================
+    | *▇▇▏◥▇◣┊◢▇◤▕▇▇*li.   |
+    | *▇▇▏▃▆▅▎▅▆▃▕▇▇*li.   |
+    | *▇▇▏╱▔▕▎▔▔╲▕▇▇*li.   |
+    | *▇▇◣◣▃▅▎▅▃◢◢▇▇*li.   |
+    | *▇▇▇◣◥▅▅▅◤◢▇▇▇*li.   |
+    | *▇▇▇▇◣╲▇╱◢▇▇▇▇*li.   |
+    ===========================
+    '''
     print(banner)
 
 def get_location(ip=''):
@@ -17,13 +21,14 @@ def get_location(ip=''):
         else:
             response = requests.get(f"https://ipinfo.io/{ip}/json")
         
-        if response.status_code == 200:
-            data = response.json()
-            return data
-        else:
-            print(f"Failed to retrieve data. Status code: {response.status_code}")
-            return None
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        
+        data = response.json()
+        return data
             
+    except requests.RequestException as e:
+        print(f"Request Error: {e}")
+        return None
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -33,8 +38,9 @@ def main():
     ip = input("Enter IP address (leave empty to use current IP): ").strip()
     
     if ip:
-        parts = ip.split('.')
-        if len(parts) != 4 or not all(part.isdigit() and 0 <= int(part) <= 255 for part in parts):
+        try:
+            ipaddress.ip_address(ip)  # Validate the IP address
+        except ValueError:
             print("Invalid IP address format.")
             return
     
